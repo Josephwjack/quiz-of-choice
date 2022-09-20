@@ -7,6 +7,7 @@ function QuizDetail(props){
   function handleNewResponseSubmission(event) {
     event.preventDefault();
     props.onSubmittingQuiz({
+      quizId: quiz.id,
       name: quiz.name,
       response1: event.target.response1.value,
       response2: event.target.response2.value,

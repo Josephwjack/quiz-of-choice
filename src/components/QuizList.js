@@ -7,11 +7,14 @@ function QuizList(props) {
     <React.Fragment>
       <hr />
       {props.quizList.map((quiz) => 
-        <Quiz
-          whenQuizClicked = { props.onQuizSelection }
-          name = { quiz.name } 
-          key = { quiz.id }
-          id = { quiz.id } />
+        <React.Fragment>
+          <Quiz
+            whenQuizClicked = { props.onQuizSelection }
+            name = { quiz.name } 
+            key = { quiz.id }
+            id = { quiz.id } />
+          <button onClick={() => props.onViewResponses(quiz.id)}>View Responses</button>
+        </React.Fragment>
       )}
     </React.Fragment>
   );
