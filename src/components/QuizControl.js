@@ -6,6 +6,7 @@ import EditQuizForm from './EditQuizForm';
 import ResponseList from './ResponseList';
 import { db, auth } from './../firebase.js';
 import { collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot } from 'firebase/firestore';
+import QuizDashboard from './QuizDashboard';
 
 function QuizControl() {
 
@@ -17,6 +18,7 @@ function QuizControl() {
   const [responsesVisibleOnPage, setResponsesVisibleOnPage] = useState(false);
   const [editing, setEditing] = useState(false);
   const [error, setError] = useState(null);
+  const [viewDashboard, setViewDashboard] = useState(false);
 
   useEffect(() => {
     const unSubscribe = onSnapshot(
@@ -25,7 +27,7 @@ function QuizControl() {
         const quizzes = [];
         collectionSnapshot.forEach((doc) => {
           quizzes.push({
-            ... doc.data(),
+            ...doc.data(),
             id: doc.id
           });
         });
@@ -46,7 +48,7 @@ function QuizControl() {
         const responses = [];
         collectionSnapshot.forEach((doc) => {
           responses.push({
-            ... doc.data(),
+            ...doc.data(),
             id: doc.id
           });
         });
@@ -68,10 +70,14 @@ function QuizControl() {
       setSelectedQuiz(null);
       setEditing(false);
     } else if (responsesVisibleOnPage) {
-      setResponsesVisibleOnPage(false);
+      setResponsesVisibleOnPage(false);  
     } else {  
       setFormVisibleOnPage(!formVisibleOnPage);
     }
+  }
+
+  const handleMyDashboard = () => {
+    setViewDashboard(!viewDashboard)
   }
 
   const handleDeletingQuiz = async (id) => {
@@ -114,51 +120,69 @@ function QuizControl() {
     console.log(selectedQuiz);
   }
 
-  let currentlyVisibleState = null;
-  let buttonText = null;
+  if (auth.currentUser == null) {
+    return (
+      <React.Fragment>
+        <h1>You must be signed in to access quizzes.</h1>
+      </React.Fragment>
+    )
+  } else if (auth.currentUser != null) {
+    let currentlyVisibleState = null;
+    let buttonText = null;
 
-  if (error) {
-    currentlyVisibleState = <p>There was an error: {error}</p>
-  } else if (editing) {
-    currentlyVisibleState =
-      <EditQuizForm 
-        quiz = {selectedQuiz}
-        onEditQuiz = {handleEditingQuizInList} />
-      buttonText = "Return to Quiz List";
-  } else if (selectedQuiz != null) {
-    currentlyVisibleState = 
-      <QuizDetail
-        quiz = {selectedQuiz}
-        onClickingDelete = {handleDeletingQuiz}
-        onClickingEdit = {handleEditClick}
-        onSubmittingQuiz = {handleAddingNewResponseToList} />
-      buttonText = "Return to Quiz List";
-  } else if (responsesVisibleOnPage) {
-    currentlyVisibleState = 
-      <ResponseList
-        quiz = {selectedQuiz}
-        responses = {selectedResponses} />
-      buttonText="Return to Quiz List";
-  } else if (formVisibleOnPage) {
-    currentlyVisibleState = 
-      <NewQuizForm
-        onNewQuizCreation = {handleAddingNewQuizToList} />
+    if (error) {
+      currentlyVisibleState = <p>There was an error: {error}</p>
+    } else if (editing) {
+      currentlyVisibleState =
+        <EditQuizForm 
+          quiz = {selectedQuiz}
+          onEditQuiz = {handleEditingQuizInList} />
         buttonText = "Return to Quiz List";
-  } else {
-    currentlyVisibleState =
-      <QuizList
-        quizList = {mainQuizList}
-        onQuizSelection = {handleChangingSelectedQuiz}
-        onViewResponses = {handleViewResponses} />
-      buttonText = "Add Quiz";
-  }
+    } else if (selectedQuiz != null) {
+      currentlyVisibleState = 
+        <QuizDetail
+          quiz = {selectedQuiz}
+          onClickingDelete = {handleDeletingQuiz}
+          onClickingEdit = {handleEditClick}
+          onSubmittingQuiz = {handleAddingNewResponseToList} />
+        buttonText = "Return to Quiz List";
+    } else if (responsesVisibleOnPage) {
+      currentlyVisibleState = 
+        <ResponseList
+          quiz = {selectedQuiz}
+          responses = {selectedResponses} />
+        buttonText="Return to Quiz List";
+    } else if (formVisibleOnPage) {
+      currentlyVisibleState = 
+        <NewQuizForm
+          onNewQuizCreation = {handleAddingNewQuizToList} />
+        buttonText = "Return to Quiz List";
+    } else if (viewDashboard) {
+      currentlyVisibleState = 
+        <QuizDashboard 
+          quizList={mainQuizList}
+          onQuizSelection={handleChangingSelectedQuiz}
+          changeList={handleMyDashboard}
+          onViewResponses = {handleViewResponses} />
+        buttonText = "Create Quiz";
+    } else {
+      currentlyVisibleState =
+        <QuizList
+          quizList = {mainQuizList}
+          onQuizSelection = {handleChangingSelectedQuiz}
+          changeList={handleMyDashboard}
+          onViewResponses = {handleViewResponses} />
+        buttonText = "Add Quiz";
+    }
 
-  return (
-    <React.Fragment>
-      {currentlyVisibleState}
-      {error ? null : <button onClick = {handleClick}>{buttonText}</button>}
-    </React.Fragment>
-  );
+    return (
+      <React.Fragment>
+        {currentlyVisibleState}
+        {/* {auth.currentUser != null ? <button onClick={() => setViewDashboard(true)}>View My Quizzes</button> : null} */}
+        {error ? null : <button onClick = {handleClick}>{buttonText}</button>}
+      </React.Fragment>
+    );
+  }
 
 }
 

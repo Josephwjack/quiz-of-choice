@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 
 function QuizDetail(props){
   const { quiz, onClickingDelete, onClickingEdit, onSubmittingQuiz } = props;
@@ -18,6 +20,7 @@ function QuizDetail(props){
   return (
     <React.Fragment>
       <h1>Quiz Detail</h1>
+      <Card style={{width: 'auto', justifyContent: 'center', textAlign: 'center'}}>
       <h3>{quiz.name}</h3>
       <hr/>
       <form onSubmit={handleNewResponseSubmission}>
@@ -32,6 +35,7 @@ function QuizDetail(props){
         <hr/>
         <button type="submit">Submit Quiz</button>
       </form>
+    </Card>
       <button onClick={onClickingEdit}>Edit Quiz</button>
       <button onClick={() => onClickingDelete(quiz.id)}>Delete Quiz</button>
     </React.Fragment>
