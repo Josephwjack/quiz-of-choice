@@ -22,7 +22,7 @@ function ResponseList(props) {
 }
 
 ResponseList.propTypes = {
-  responses: PropTypes.array
+  responses: PropTypes.array,
 }
 
 export default ResponseList;

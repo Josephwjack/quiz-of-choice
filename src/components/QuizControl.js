@@ -7,6 +7,7 @@ import ResponseList from './ResponseList';
 import { db, auth } from './../firebase.js';
 import { collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot } from 'firebase/firestore';
 import QuizDashboard from './QuizDashboard';
+import Button from 'react-bootstrap/Button';
 
 function QuizControl() {
 
@@ -62,8 +63,8 @@ function QuizControl() {
     return () => unSubscribe();
   }, []);
 
-
-
+  
+  
   const handleClick = () => {
     if (selectedQuiz != null) {
       setFormVisibleOnPage(false);
@@ -75,6 +76,7 @@ function QuizControl() {
       setFormVisibleOnPage(!formVisibleOnPage);
     }
   }
+  
 
   const handleMyDashboard = () => {
     setViewDashboard(!viewDashboard)
@@ -179,7 +181,7 @@ function QuizControl() {
       <React.Fragment>
         {currentlyVisibleState}
         {/* {auth.currentUser != null ? <button onClick={() => setViewDashboard(true)}>View My Quizzes</button> : null} */}
-        {error ? null : <button onClick = {handleClick}>{buttonText}</button>}
+        {error ? null : <Button onClick = {handleClick}>{buttonText}</Button>}
       </React.Fragment>
     );
   }

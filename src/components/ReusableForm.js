@@ -1,28 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
 function ReusableForm(props) {
   return (
     <React.Fragment>
-      <form onSubmit={props.formSubmissionHandler}>
-        <input
-          type='text'
-          name='name'
-          placeholder='Quiz name' />
-        <input
-          type='text'
-          name='question1'
-          placeholder='question 1' />
-        <input
-          type='text'
-          name='question2'
-          placeholder='question 2' />
-        <input
-          type='text'
-          name='question3'
-          placeholder='question 3' />
-        <button type='submit'>{props.buttonText}</button>
-      </form>
+      <Container>
+      <Form style={{margin: 5, }}onSubmit={props.formSubmissionHandler}>
+        <Form.Group>
+          <Form.Label>Quiz Name:</Form.Label>
+          <Form.Control
+            type='text'
+            name='name'
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Question 1:</Form.Label>
+          <Form.Control
+            type='text'
+            name='question1'
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Question 2:</Form.Label>
+          <Form.Control
+            type='text'
+            name='question2'
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Question 3:</Form.Label>
+          <Form.Control
+            type='text'
+            name='question3'
+          />
+        </Form.Group>
+        <br />
+        <Button className="d-flex justify-content-center" type='submit'>{props.buttonText}</Button>
+      </Form>
+      </Container>
     </React.Fragment>
   );
 }

@@ -9,7 +9,7 @@ function QuizDashboard(props) {
   return(
     <React.Fragment>
       {myDashboard.map((quiz) =>
-      // <React.Fragment>
+      
         <Quiz
           whenQuizClicked={props.onQuizSelection}
           name={quiz.name}
@@ -17,7 +17,7 @@ function QuizDashboard(props) {
           id={quiz.id}
           key={quiz.id} />
           
-          // </React.Fragment>
+          
       )}
           {/* <button onClick={() => props.onViewResponses(quiz.id)}>View Responses</button> */}
     </React.Fragment>

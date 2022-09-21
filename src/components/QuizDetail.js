@@ -2,9 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import { Input } from 'reactstrap';
+
 
 function QuizDetail(props){
-  const { quiz, onClickingDelete, onClickingEdit, onSubmittingQuiz } = props;
+  const { quiz, onClickingDelete, onClickingEdit } = props;
 
   function handleNewResponseSubmission(event) {
     event.preventDefault();
@@ -19,25 +22,30 @@ function QuizDetail(props){
 
   return (
     <React.Fragment>
-      <h1>Quiz Detail</h1>
       <Card style={{width: 'auto', justifyContent: 'center', textAlign: 'center'}}>
-      <h3>{quiz.name}</h3>
+      
+      <Card.Title><h1>{quiz.name}</h1></Card.Title>
       <hr/>
-      <form onSubmit={handleNewResponseSubmission}>
+      <Form onSubmit={handleNewResponseSubmission}>
+        <Card.Body>
         <h5>{quiz.question1}</h5>
-        <input type="text" name="response1"/>
+        <Input type="text" name="response1"/>
         <hr/>
         <h5>{quiz.question2}</h5>
-        <input type="text" name="response2"/>
+        <Input type="text" name="response2"/>
         <hr/>
         <h5>{quiz.question3}</h5>
-        <input type="text" name="response3"/>
+        <Input type="text" name="response3"/>
+        </Card.Body>
         <hr/>
-        <button type="submit">Submit Quiz</button>
-      </form>
+        <Button type="submit">Submit Quiz</Button>
+      </Form>
+      
     </Card>
-      <button onClick={onClickingEdit}>Edit Quiz</button>
-      <button onClick={() => onClickingDelete(quiz.id)}>Delete Quiz</button>
+    <div className="d-flex justify-content-center">
+      <Button variant="danger" onClick={() => onClickingDelete(quiz.id)}>Delete Quiz</Button>
+      <Button variant="danger"onClick={onClickingEdit}>Edit Quiz</Button>
+      </div>
     </React.Fragment>
   );
 }
@@ -46,7 +54,7 @@ QuizDetail.propTypes = {
   quiz: PropTypes.object,
   onClickingDelete: PropTypes.func,
   onClickingEdit: PropTypes.func,
-  onSubmittingQuiz: PropTypes.func
+  
 };
 
 export default QuizDetail;

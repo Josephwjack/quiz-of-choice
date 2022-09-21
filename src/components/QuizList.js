@@ -1,11 +1,17 @@
 import React from 'react';
 import Quiz from './Quiz';
 import PropTypes from 'prop-types';
-import ListGroup from 'react-bootstrap/ListGroup';
+
+
+const listStyles = {
+  marginTop: "5%",
+  textAlign: "center",
+}
 
 function QuizList(props) {
   return (
     <React.Fragment>
+      <div style={listStyles}>
       <hr />
      
       {props.quizList.map((quiz) => 
@@ -19,7 +25,8 @@ function QuizList(props) {
             />                
       )}     
      
-       <hr />    
+      <hr /> 
+      </div>   
     </React.Fragment>
   );
 }
