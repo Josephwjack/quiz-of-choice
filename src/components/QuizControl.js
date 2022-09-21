@@ -4,7 +4,7 @@ import QuizList from './QuizList';
 import QuizDetail from './QuizDetail';
 import EditQuizForm from './EditQuizForm';
 import ResponseList from './ResponseList';
-import db from './../firebase.js';
+import { db, auth } from './../firebase.js';
 import { collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot } from 'firebase/firestore';
 
 function QuizControl() {
