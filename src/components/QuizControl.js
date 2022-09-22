@@ -8,9 +8,10 @@ import { db, auth } from './../firebase.js';
 import { collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot } from 'firebase/firestore';
 import QuizDashboard from './QuizDashboard';
 import Button from 'react-bootstrap/Button';
+import { Route } from "react-router-dom";
 
-function QuizControl() {
-
+function QuizControl(match) {
+  
   const [formVisibleOnPage, setFormVisibleOnPage] = useState(false);
   const [mainQuizList, setMainQuizList] = useState([]);
   const [mainResponseList, setMainResponseList] = useState([]);
@@ -20,6 +21,8 @@ function QuizControl() {
   const [editing, setEditing] = useState(false);
   const [error, setError] = useState(null);
   const [viewDashboard, setViewDashboard] = useState(false);
+
+  <Route path={match.url + "/dashboard"} element={<QuizDashboard />}/>
 
   useEffect(() => {
     const unSubscribe = onSnapshot(
@@ -62,14 +65,13 @@ function QuizControl() {
 
     return () => unSubscribe();
   }, []);
-
-  
   
   const handleClick = () => {
     if (selectedQuiz != null) {
       setFormVisibleOnPage(false);
       setSelectedQuiz(null);
       setEditing(false);
+      setResponsesVisibleOnPage(false);
     } else if (responsesVisibleOnPage) {
       setResponsesVisibleOnPage(false);  
     } else {  
@@ -140,6 +142,12 @@ function QuizControl() {
           quiz = {selectedQuiz}
           onEditQuiz = {handleEditingQuizInList} />
         buttonText = "Return to Quiz List";
+    } else if (responsesVisibleOnPage) {
+      currentlyVisibleState = 
+        <ResponseList
+          quiz = {selectedQuiz}
+          responses = {selectedResponses} />
+        buttonText="Return to Quiz List";
     } else if (selectedQuiz != null) {
       currentlyVisibleState = 
         <QuizDetail
@@ -148,12 +156,6 @@ function QuizControl() {
           onClickingEdit = {handleEditClick}
           onSubmittingQuiz = {handleAddingNewResponseToList} />
         buttonText = "Return to Quiz List";
-    } else if (responsesVisibleOnPage) {
-      currentlyVisibleState = 
-        <ResponseList
-          quiz = {selectedQuiz}
-          responses = {selectedResponses} />
-        buttonText="Return to Quiz List";
     } else if (formVisibleOnPage) {
       currentlyVisibleState = 
         <NewQuizForm
@@ -181,6 +183,7 @@ function QuizControl() {
       <React.Fragment>
         {currentlyVisibleState}
         {/* {auth.currentUser != null ? <button onClick={() => setViewDashboard(true)}>View My Quizzes</button> : null} */}
+        {/* ^^^ button to re-activate dashboard if header doesn't work. */}
         {error ? null : <Button onClick = {handleClick}>{buttonText}</Button>}
       </React.Fragment>
     );

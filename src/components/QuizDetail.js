@@ -4,6 +4,8 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Input } from 'reactstrap';
+import styled from 'styled-components';
+
 
 
 function QuizDetail(props){
@@ -21,30 +23,28 @@ function QuizDetail(props){
   }
 
   return (
-    <React.Fragment>
-      <Card style={{width: 'auto', justifyContent: 'center', textAlign: 'center'}}>
-      
-      <Card.Title><h1>{quiz.name}</h1></Card.Title>
-      <hr/>
-      <Form onSubmit={handleNewResponseSubmission}>
-        <Card.Body>
-        <h5>{quiz.question1}</h5>
-        <Input type="text" name="response1"/>
+    <React.Fragment>   
+      <Card className="cardStyle" >
+        <Form className="formColor" onSubmit={handleNewResponseSubmission}>
+        <Card.Title><h1>{quiz.name}</h1></Card.Title>
         <hr/>
-        <h5>{quiz.question2}</h5>
-        <Input type="text" name="response2"/>
-        <hr/>
-        <h5>{quiz.question3}</h5>
-        <Input type="text" name="response3"/>
-        </Card.Body>
-        <hr/>
-        <Button type="submit">Submit Quiz</Button>
-      </Form>
-      
-    </Card>
+          <Card.Body>
+          <h5>{quiz.question1}</h5>
+          <Input type="text" name="response1"/>
+          <hr/>
+          <h5>{quiz.question2}</h5>
+          <Input type="text" name="response2"/>
+          <hr/>
+          <h5>{quiz.question3}</h5>
+          <Input type="text" name="response3"/>
+          </Card.Body>
+          <hr/>
+          <Button type="submit">Submit Quiz</Button>
+        </Form>
+      </Card>   
     <div className="d-flex justify-content-center">
-      <Button variant="danger" onClick={() => onClickingDelete(quiz.id)}>Delete Quiz</Button>
-      <Button variant="danger"onClick={onClickingEdit}>Edit Quiz</Button>
+      <Button variant="outline-danger" onClick={() => onClickingDelete(quiz.id)}>Delete Quiz</Button>
+      <Button variant="outline-danger"onClick={onClickingEdit}>Edit Quiz</Button>
       </div>
     </React.Fragment>
   );

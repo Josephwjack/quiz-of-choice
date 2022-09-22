@@ -9,7 +9,7 @@ function SignIn(){
   const [signInSuccess, setSignInSuccess] = useState(null);
   const [signOutSuccess, setSignOutSuccess] = useState(null);
 
-  function doSignUp(event) {
+  const doSignUp = (event) => {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
@@ -22,7 +22,7 @@ function SignIn(){
       });
   }
 
-  function doSignIn(event) {
+  const doSignIn = (event) => {
     event.preventDefault();
     const email = event.target.signinEmail.value;
     const password = event.target.signinPassword.value;
@@ -47,43 +47,47 @@ function SignIn(){
   return (
     <React.Fragment>
       <div>
-      <Form>
+      <Form onSubmit={doSignUp}>
       <h1>Sign up</h1>
       {signUpSuccess}
-      <Form.Group className="mb-3 justifiy-content-center" onSubmit={doSignUp}>
+      <Form.Group className="mb-3 justify-content-center" controlId="email">
       {/* <form onSubmit={doSignUp}> */}
         {/* <input */}
-          <Form.Control type='text'
+          <Form.Control type='email'
           name='email'
           placeholder='email' />
-      
+      </Form.Group>
+      <Form.Group className="mb-3 justify-content-center" controlId="password">
           <Form.Control type='password'
           name='password'
-          placeholder='Password' />
+          placeholder='password' />
           </Form.Group>
         <Button type='submit'>Sign up</Button>
       </Form>
-      <Form>
+      <Form  onSubmit={doSignIn}>
       <h1>Sign In</h1>
       {signInSuccess}
-      <Form.Group className="mb-3" onSubmit={doSignIn}>
+      <Form.Group className="mb-3" controlId="signinEmail">
         <Form.Control
-          type='text'
+          type='signinEmail'
           name='signinEmail'
           placeholder='email' />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="signinPassword">
         <Form.Control
           type='password'
           name='signinPassword'
-          placeholder='Password' />
+          placeholder='password' />
       </Form.Group>
         <Button type='submit'>Sign in</Button>
         </Form>
-
+      </div>
+      <div>
       <h1>Sign Out</h1>
       {signOutSuccess}
       <br />
-      <Button onClick={doSignOut}>Sign out</Button>
       </div>
+      <Button onClick={doSignOut}>Sign out</Button>
     </React.Fragment>
       
   );

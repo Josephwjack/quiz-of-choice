@@ -45,6 +45,7 @@ $ npm run start
 
 ## Known Bugs
 
+- Struggling to route past control to dashboard component through the navbar. Dashboard works if accessing through buttons.
 
 <hr />
 

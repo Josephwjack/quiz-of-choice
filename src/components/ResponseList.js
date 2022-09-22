@@ -5,10 +5,6 @@ import PropTypes from 'prop-types';
 function ResponseList(props) {
   return (
     <React.Fragment>
-      {/* <h1>{props.quiz.name}</h1>
-      <h3>{props.quiz.question1}</h3>
-      <h3>{props.quiz.question2}</h3>
-      <h3>{props.quiz.question3}</h3> */}
       {props.responses.map((response) =>
         <Response
           response1 = {response.response1}
