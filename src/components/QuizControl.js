@@ -127,7 +127,7 @@ function QuizControl(match) {
   if (auth.currentUser == null) {
     return (
       <React.Fragment>
-        <h1>You must be signed in to access quizzes.</h1>
+        <h1 style={{textAlign:'center'}}>You must be signed in to access quizzes.</h1>
       </React.Fragment>
     )
   } else if (auth.currentUser != null) {
